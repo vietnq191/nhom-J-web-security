@@ -15,7 +15,8 @@ if (!empty($_POST['submit'])) {
     if ($user = $userModel->auth($users['username'], $users['password'])) {
         //Login successful
         $_SESSION['id'] = $user[0]['id'];
-
+        $_SESSION['hash_random'] = md5(time());
+        $_SESSION['token'] = $user[0]['token'] . $_SESSION['hash_random'];
         $_SESSION['message'] = 'Login successful';
         header('location: list_users.php');
     }else {
